@@ -32,6 +32,32 @@ def write_excel(path, transactions):
         sheet.write(idx_row+1, len(values)+1, '   ')
     workbook.close()
 
+def get_discretionary(matrix, path, activity):
+    transactions = []
+    for listrow in matrix:
+        row = list(map(str,listrow))
+        if(row[0] != '' and row[0][:1].isdigit()):
+            # skip transactions of 0 dollars
+            budget = text_2_float(row[14])
+            trans = text_2_float(row[15])
+            encumbered = text_2_float(row[16])
+            if(budget != 0 or trans != 0 or encumbered != 0):
+                try:
+                    date = parse(row[9], None)
+                    row[9] = date.strftime("%m/%d/%Y")
+                    # clean up some of the data
+                    if(row[13] == 'nan'):
+                        row[13] = ''
+                    row[14] = str(round(budget,2))
+                    row[15] = str(round(trans, 2))
+                    row[16] = str(round(encumbered, 2))
+
+                    if("110000" in row[0] and activity in row[4]):
+                        transactions.append(row)
+                except:
+                    continue
+    write_excel(path, transactions)
+
 # Parsing out financial information
 filetypes = (
     ('excel files', '*.xlsx'),
@@ -52,63 +78,20 @@ if(getfile != ''):
         df = excl.parse(sheets[0])
         matrix = df.to_numpy()
 
-       # Asari
-        transactions = []
-        for listrow in matrix:
-            row = list(map(str,listrow))
-            if(row[0] != '' and row[0][:1].isdigit()):
-                # skip transactions of 0 dollars
-                budget = text_2_float(row[14])
-                trans = text_2_float(row[15])
-                encumbered = text_2_float(row[16])
-                if(budget != 0 or trans != 0 or encumbered != 0):
-                    try:
-                        date = parse(row[9], None)
-                        row[9] = date.strftime("%m/%d/%Y")
-                        # clean up some of the data
-                        if(row[13] == 'nan'):
-                            row[13] = ''
-                        row[14] = str(round(budget,2))
-                        row[15] = str(round(trans, 2))
-                        row[16] = str(round(encumbered, 2))
-
-                        if("110000" in row[0] and "151500" in row[4]):
-                            transactions.append(row)
-                    except:
-                        continue
-
+        ########################## Faculty Discretionary ##################################
+        # Asari
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Asari\\Asari.xlsx'
-        write_excel(path, transactions)
+        get_discretionary(matrix, path, "151500")
+ 
+        # Balster
+        path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Balster\\Balster.xlsx'
+        get_discretionary(matrix, path, "151501")
 
-       # Chodavarapu
-        transactions = []
-        for listrow in matrix:
-            row = list(map(str,listrow))
-            if(row[0] != '' and row[0][:1].isdigit()):
-                # skip transactions of 0 dollars
-                budget = text_2_float(row[14])
-                trans = text_2_float(row[15])
-                encumbered = text_2_float(row[16])
-                if(budget != 0 or trans != 0 or encumbered != 0):
-                    try:
-                        date = parse(row[9], None)
-                        row[9] = date.strftime("%m/%d/%Y")
-                        # clean up some of the data
-                        if(row[13] == 'nan'):
-                            row[13] = ''
-                        row[14] = str(round(budget,2))
-                        row[15] = str(round(trans, 2))
-                        row[16] = str(round(encumbered, 2))
-
-                        if("110000" in row[0] and "151512" in row[4]):
-                            transactions.append(row)
-                    except:
-                        continue
-
+        # Chodavarapu
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Chodavarapu\\Chodavarapu.xlsx'
-        write_excel(path, transactions)
+        get_discretionary(matrix, path, "151512")
 
-       # Doll
+        # Doll
         transactions = []
         for listrow in matrix:
             row = list(map(str,listrow))
@@ -132,37 +115,12 @@ if(getfile != ''):
                             transactions.append(row)
                     except:
                         continue
-
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Doll\\Doll.xlsx'
         write_excel(path, transactions)
 
         # Hardie
-        transactions = []
-        for listrow in matrix:
-            row = list(map(str,listrow))
-            if(row[0] != '' and row[0][:1].isdigit()):
-                # skip transactions of 0 dollars
-                budget = text_2_float(row[14])
-                trans = text_2_float(row[15])
-                encumbered = text_2_float(row[16])
-                if(budget != 0 or trans != 0 or encumbered != 0):
-                    try:
-                        date = parse(row[9], None)
-                        row[9] = date.strftime("%m/%d/%Y")
-                        # clean up some of the data
-                        if(row[13] == 'nan'):
-                            row[13] = ''
-                        row[14] = str(round(budget,2))
-                        row[15] = str(round(trans, 2))
-                        row[16] = str(round(encumbered, 2))
-
-                        if("110000" in row[0] and "151502" in row[4]):
-                            transactions.append(row)
-                    except:
-                        continue
-
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Hardie\\Hardie.xlsx'
-        write_excel(path, transactions)
+        get_discretionary(matrix, path, "151502")
 
         # Hirakawa
         transactions = []
@@ -188,37 +146,12 @@ if(getfile != ''):
                             transactions.append(row)
                     except:
                         continue
-
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Hirakawa\\Hirakawa.xlsx'
         write_excel(path, transactions)
 
         # Ordonez
-        transactions = []
-        for listrow in matrix:
-            row = list(map(str,listrow))
-            if(row[0] != '' and row[0][:1].isdigit()):
-                # skip transactions of 0 dollars
-                budget = text_2_float(row[14])
-                trans = text_2_float(row[15])
-                encumbered = text_2_float(row[16])
-                if(budget != 0 or trans != 0 or encumbered != 0):
-                    try:
-                        date = parse(row[9], None)
-                        row[9] = date.strftime("%m/%d/%Y")
-                        # clean up some of the data
-                        if(row[13] == 'nan'):
-                            row[13] = ''
-                        row[14] = str(round(budget,2))
-                        row[15] = str(round(trans, 2))
-                        row[16] = str(round(encumbered, 2))
-
-                        if("110000" in row[0] and "151508" in row[4]):
-                            transactions.append(row)
-                    except:
-                        continue
-
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Ordonez\\Ordonez.xlsx'
-        write_excel(path, transactions)
+        get_discretionary(matrix, path, "151508")
 
         # Ratliff
         transactions = []
@@ -244,7 +177,6 @@ if(getfile != ''):
                             transactions.append(row)
                     except:
                         continue
-
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Ratliff\\Ratliff.xlsx'
         write_excel(path, transactions)
 
@@ -305,29 +237,38 @@ if(getfile != ''):
         write_excel(path, transactions)
 
         # Taha
-        transactions = []
-        for listrow in matrix:
-            row = list(map(str,listrow))
-            if(row[0] != '' and row[0][:1].isdigit()):
-                # skip transactions of 0 dollars
-                budget = text_2_float(row[14])
-                trans = text_2_float(row[15])
-                encumbered = text_2_float(row[16])
-                if(budget != 0 or trans != 0 or encumbered != 0):
-                    try:
-                        date = parse(row[9], None)
-                        row[9] = date.strftime("%m/%d/%Y")
-                        # clean up some of the data
-                        if(row[13] == 'nan'):
-                            row[13] = ''
-                        row[14] = str(round(budget,2))
-                        row[15] = str(round(trans, 2))
-                        row[16] = str(round(encumbered, 2))
-
-                        if("110000" in row[0] and "151509" in row[4]):
-                            transactions.append(row)
-                    except:
-                        continue
-
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Taha\\Taha.xlsx'
-        write_excel(path, transactions)
+        get_discretionary(matrix, path, "151509")
+
+        ############################# Staff Discretionary ####################################
+        # Yakopcic
+        path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Yakopcic\\Yakopcic.xlsx'
+        get_discretionary(matrix, path, "151511")
+
+        # Aspiras
+        path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Aspiras\\Aspiras.xlsx'
+        get_discretionary(matrix, path, "151514")
+
+        # Shin
+        path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Shin\\Shin.xlsx'
+        get_discretionary(matrix, path, "151515")
+
+        # Kumar
+        path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Kumar\\Kumar.xlsx'
+        get_discretionary(matrix, path, "151516")
+
+        # Atahary
+        path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Atahary\\Atahary.xlsx'
+        get_discretionary(matrix, path, "151517")
+
+        # Liu
+        path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Liu\\Liu.xlsx'
+        get_discretionary(matrix, path, "151518")
+
+        # Batts
+        path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Batts\\Batts.xlsx'
+        get_discretionary(matrix, path, "151519")
+
+        # Nehrbass
+        path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Nehrbass\\Nehrbass.xlsx'
+        get_discretionary(matrix, path, "151520")
