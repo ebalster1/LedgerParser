@@ -80,18 +80,22 @@ if(getfile != ''):
 
         ########################## Faculty Discretionary ##################################
         # Asari
+        print("Asari")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Asari\\Asari.xlsx'
         get_discretionary(matrix, path, "151500")
  
         # Balster
+        print("Balster")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Balster\\Balster.xlsx'
         get_discretionary(matrix, path, "151501")
 
         # Chodavarapu
+        print("Chodavarapu")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Chodavarapu\\Chodavarapu.xlsx'
         get_discretionary(matrix, path, "151512")
 
         # Doll
+        print("Doll")
         transactions = []
         for listrow in matrix:
             row = list(map(str,listrow))
@@ -119,10 +123,12 @@ if(getfile != ''):
         write_excel(path, transactions)
 
         # Hardie
+        print("Hardie")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Hardie\\Hardie.xlsx'
         get_discretionary(matrix, path, "151502")
 
         # Hirakawa
+        print("Hirakawa")
         transactions = []
         for listrow in matrix:
             row = list(map(str,listrow))
@@ -150,10 +156,12 @@ if(getfile != ''):
         write_excel(path, transactions)
 
         # Ordonez
+        print("Ordonez")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Ordonez\\Ordonez.xlsx'
         get_discretionary(matrix, path, "151508")
 
         # Ratliff
+        print("Ratliff")
         transactions = []
         for listrow in matrix:
             row = list(map(str,listrow))
@@ -181,6 +189,7 @@ if(getfile != ''):
         write_excel(path, transactions)
 
        # Rigling
+        print("Rigling")
         transactions = []
         for listrow in matrix:
             row = list(map(str,listrow))
@@ -204,11 +213,11 @@ if(getfile != ''):
                             transactions.append(row)
                     except:
                         continue
-
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Rigling\\Rigling.xlsx'
         write_excel(path, transactions)
 
         # Subramanyam
+        print("Subramanyam")
         transactions = []
         for listrow in matrix:
             row = list(map(str,listrow))
@@ -232,43 +241,53 @@ if(getfile != ''):
                             transactions.append(row)
                     except:
                         continue
-
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Subramanyam\\Subramanyam.xlsx'
         write_excel(path, transactions)
-
+    
         # Taha
+        print("Taha")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Taha\\Taha.xlsx'
         get_discretionary(matrix, path, "151509")
-
+    
         ############################# Staff Discretionary ####################################
         # Yakopcic
+        print("Yakopcic")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Yakopcic\\Yakopcic.xlsx'
         get_discretionary(matrix, path, "151511")
-
+    
         # Aspiras
+        print("Aspiras")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Aspiras\\Aspiras.xlsx'
         get_discretionary(matrix, path, "151514")
-
+    
         # Shin
+        print("Shin")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Shin\\Shin.xlsx'
         get_discretionary(matrix, path, "151515")
-
+    
         # Kumar
+        print("Kumar")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Kumar\\Kumar.xlsx'
         get_discretionary(matrix, path, "151516")
-
+    
         # Atahary
+        print("Atahary")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Atahary\\Atahary.xlsx'
         get_discretionary(matrix, path, "151517")
-
+    
         # Liu
+        print("Liu")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Liu\\Liu.xlsx'
         get_discretionary(matrix, path, "151518")
-
+    
         # Batts
+        print("Batts")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Batts\\Batts.xlsx'
         get_discretionary(matrix, path, "151519")
-
+    
         # Nehrbass
+        print("Nehrbass")
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Nehrbass\\Nehrbass.xlsx'
         get_discretionary(matrix, path, "151520")
+    
+        print("Done")
