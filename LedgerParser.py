@@ -16,8 +16,8 @@ def text_2_float(text):
 
 def write_excel(path, transactions):
     title = ['Fund', 'Organization','Account','Program','Activity','Location','Fund Type',
-    'Organization','Fund Type','Organization Level 4','Account Level 2','Transaction Date',
-    'Transaction Desc','Document Type Desc','Document','Vendor ID','Budget','Trans_Amount','Encumbered']
+    'Organization Level 4','Account Level 2','Transaction Date', 'Transaction Desc',
+    'Document Type Desc','Document','Vendor ID','Budget','Trans_Amount','Encumbered']
     
     workbook = xlsxwriter.Workbook(path)
     sheet = workbook.add_worksheet()
@@ -37,25 +37,26 @@ def get_discretionary(matrix, path, activity):
     for listrow in matrix:
         row = list(map(str,listrow))
         if(row[0] != '' and row[0][:1].isdigit()):
-            # skip transactions of 0 dollars
-            budget = text_2_float(row[14])
-            trans = text_2_float(row[15])
-            encumbered = text_2_float(row[16])
-            if(budget != 0 or trans != 0 or encumbered != 0):
-                try:
-                    date = parse(row[9], None)
-                    row[9] = date.strftime("%m/%d/%Y")
-                    # clean up some of the data
-                    if(row[13] == 'nan'):
-                        row[13] = ''
-                    row[14] = str(round(budget,2))
-                    row[15] = str(round(trans, 2))
-                    row[16] = str(round(encumbered, 2))
+            # get activity data
+            if("110000" in row[0] and activity in row[4]):
+                # skip transactions of 0 dollars
+                budget = text_2_float(row[14])
+                trans = text_2_float(row[15])
+                encumbered = text_2_float(row[16])
+                if(budget != 0 or trans != 0 or encumbered != 0):
+                    try:
+                        date = parse(row[9], None)
+                        row[9] = date.strftime("%m/%d/%Y")
+                        # clean up some of the data
+                        if(row[13] == 'nan'):
+                            row[13] = ''
+                        row[14] = str(round(budget,2))
+                        row[15] = str(round(trans, 2))
+                        row[16] = str(round(encumbered, 2))
 
-                    if("110000" in row[0] and activity in row[4]):
                         transactions.append(row)
-                except:
-                    continue
+                    except:
+                        continue
     write_excel(path, transactions)
 
 def get_startup(matrix, path, fund):
@@ -63,25 +64,26 @@ def get_startup(matrix, path, fund):
     for listrow in matrix:
         row = list(map(str,listrow))
         if(row[0] != '' and row[0][:1].isdigit()):
-            # skip transactions of 0 dollars
-            budget = text_2_float(row[14])
-            trans = text_2_float(row[15])
-            encumbered = text_2_float(row[16])
-            if(budget != 0 or trans != 0 or encumbered != 0):
-                try:
-                    date = parse(row[9], None)
-                    row[9] = date.strftime("%m/%d/%Y")
-                    # clean up some of the data
-                    if(row[13] == 'nan'):
-                        row[13] = ''
-                    row[14] = str(round(budget,2))
-                    row[15] = str(round(trans, 2))
-                    row[16] = str(round(encumbered, 2))
+            # get fund data
+            if(fund in row[0]):
+                # skip transactions of 0 dollars
+                budget = text_2_float(row[14])
+                trans = text_2_float(row[15])
+                encumbered = text_2_float(row[16])
+                if(budget != 0 or trans != 0 or encumbered != 0):
+                    try:
+                        date = parse(row[9], None)
+                        row[9] = date.strftime("%m/%d/%Y")
+                        # clean up some of the data
+                        if(row[13] == 'nan'):
+                            row[13] = ''
+                        row[14] = str(round(budget,2))
+                        row[15] = str(round(trans, 2))
+                        row[16] = str(round(encumbered, 2))
 
-                    if(fund in row[0]):
                         transactions.append(row)
-                except:
-                    continue
+                    except:
+                        continue
     write_excel(path, transactions)
 
 # Parsing out financial information
@@ -141,25 +143,27 @@ if(getfile != ''):
         for listrow in matrix:
             row = list(map(str,listrow))
             if(row[0] != '' and row[0][:1].isdigit()):
-                # skip transactions of 0 dollars
-                budget = text_2_float(row[14])
-                trans = text_2_float(row[15])
-                encumbered = text_2_float(row[16])
-                if(budget != 0 or trans != 0 or encumbered != 0):
-                    try:
-                        date = parse(row[9], None)
-                        row[9] = date.strftime("%m/%d/%Y")
-                        # clean up some of the data
-                        if(row[13] == 'nan'):
-                            row[13] = ''
-                        row[14] = str(round(budget,2))
-                        row[15] = str(round(trans, 2))
-                        row[16] = str(round(encumbered, 2))
+                # Get Hirakawa data
+                if(("414005" in row[0]) or ("414055" in row[0]) or ("110000" in row[0] and "151503" in row[4])):
+                    # skip transactions of 0 dollars
+                    budget = text_2_float(row[14])
+                    trans = text_2_float(row[15])
+                    encumbered = text_2_float(row[16])
+                    if(budget != 0 or trans != 0 or encumbered != 0):
+                        try:
+                            date = parse(row[9], None)
+                            row[9] = date.strftime("%m/%d/%Y")
+                            # clean up some of the data
+                            if(row[13] == 'nan'):
+                                row[13] = ''
+                            row[14] = str(round(budget,2))
+                            row[15] = str(round(trans, 2))
+                            row[16] = str(round(encumbered, 2))
 
-                        if(("414005" in row[0]) or ("414055" in row[0]) or ("110000" in row[0] and "151503" in row[4])):
                             transactions.append(row)
-                    except:
-                        continue
+                        except:
+                            continue
+
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Hirakawa_discretionary\\Hirakawa_discretionary.xlsx'
         write_excel(path, transactions)
 
@@ -179,25 +183,26 @@ if(getfile != ''):
         for listrow in matrix:
             row = list(map(str,listrow))
             if(row[0] != '' and row[0][:1].isdigit()):
-                # skip transactions of 0 dollars
-                budget = text_2_float(row[14])
-                trans = text_2_float(row[15])
-                encumbered = text_2_float(row[16])
-                if(budget != 0 or trans != 0 or encumbered != 0):
-                    try:
-                        date = parse(row[9], None)
-                        row[9] = date.strftime("%m/%d/%Y")
-                        # clean up some of the data
-                        if(row[13] == 'nan'):
-                            row[13] = ''
-                        row[14] = str(round(budget,2))
-                        row[15] = str(round(trans, 2))
-                        row[16] = str(round(encumbered, 2))
+                # get Ratliff data
+                if("410304" in row[0] or "110035" in row[0]):
+                    # skip transactions of 0 dollars
+                    budget = text_2_float(row[14])
+                    trans = text_2_float(row[15])
+                    encumbered = text_2_float(row[16])
+                    if(budget != 0 or trans != 0 or encumbered != 0):
+                        try:
+                            date = parse(row[9], None)
+                            row[9] = date.strftime("%m/%d/%Y")
+                            # clean up some of the data
+                            if(row[13] == 'nan'):
+                                row[13] = ''
+                            row[14] = str(round(budget,2))
+                            row[15] = str(round(trans, 2))
+                            row[16] = str(round(encumbered, 2))
 
-                        if("410304" in row[0] or "110035" in row[0]):
                             transactions.append(row)
-                    except:
-                        continue
+                        except:
+                            continue
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Ratliff_discretionary\\Ratliff_discretionary.xlsx'
         write_excel(path, transactions)
 
@@ -207,25 +212,26 @@ if(getfile != ''):
         for listrow in matrix:
             row = list(map(str,listrow))
             if(row[0] != '' and row[0][:1].isdigit()):
-                # skip transactions of 0 dollars
-                budget = text_2_float(row[14])
-                trans = text_2_float(row[15])
-                encumbered = text_2_float(row[16])
-                if(budget != 0 or trans != 0 or encumbered != 0):
-                    try:
-                        date = parse(row[9], None)
-                        row[9] = date.strftime("%m/%d/%Y")
-                        # clean up some of the data
-                        if(row[13] == 'nan'):
-                            row[13] = ''
-                        row[14] = str(round(budget,2))
-                        row[15] = str(round(trans, 2))
-                        row[16] = str(round(encumbered, 2))
+                # get Rigling data
+                if("220451" in row[1] or ("110000" in row[0] and "151506" in row[4]) or "110064" in row[0]):
+                    # skip transactions of 0 dollars
+                    budget = text_2_float(row[14])
+                    trans = text_2_float(row[15])
+                    encumbered = text_2_float(row[16])
+                    if(budget != 0 or trans != 0 or encumbered != 0):
+                        try:
+                            date = parse(row[9], None)
+                            row[9] = date.strftime("%m/%d/%Y")
+                            # clean up some of the data
+                            if(row[13] == 'nan'):
+                                row[13] = ''
+                            row[14] = str(round(budget,2))
+                            row[15] = str(round(trans, 2))
+                            row[16] = str(round(encumbered, 2))
 
-                        if("220451" in row[1] or ("110000" in row[0] and "151506" in row[4])):
                             transactions.append(row)
-                    except:
-                        continue
+                        except:
+                            continue
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Rigling_discretionary\\Rigling_discretionary.xlsx'
         write_excel(path, transactions)
 
@@ -235,25 +241,26 @@ if(getfile != ''):
         for listrow in matrix:
             row = list(map(str,listrow))
             if(row[0] != '' and row[0][:1].isdigit()):
-                # skip transactions of 0 dollars
-                budget = text_2_float(row[14])
-                trans = text_2_float(row[15])
-                encumbered = text_2_float(row[16])
-                if(budget != 0 or trans != 0 or encumbered != 0):
-                    try:
-                        date = parse(row[9], None)
-                        row[9] = date.strftime("%m/%d/%Y")
-                        # clean up some of the data
-                        if(row[13] == 'nan'):
-                            row[13] = ''
-                        row[14] = str(round(budget,2))
-                        row[15] = str(round(trans, 2))
-                        row[16] = str(round(encumbered, 2))
+                # get Subramanyam data
+                if(("115054" in row[0] and "10BU04" in row[5]) or ("110000" in row[0] and "151505" in row[4])):
+                    # skip transactions of 0 dollars
+                    budget = text_2_float(row[14])
+                    trans = text_2_float(row[15])
+                    encumbered = text_2_float(row[16])
+                    if(budget != 0 or trans != 0 or encumbered != 0):
+                        try:
+                            date = parse(row[9], None)
+                            row[9] = date.strftime("%m/%d/%Y")
+                            # clean up some of the data
+                            if(row[13] == 'nan'):
+                                row[13] = ''
+                            row[14] = str(round(budget,2))
+                            row[15] = str(round(trans, 2))
+                            row[16] = str(round(encumbered, 2))
 
-                        if(("115054" in row[0] and "10BU04" in row[5]) or ("110000" in row[0] and "151505" in row[4])):
                             transactions.append(row)
-                    except:
-                        continue
+                        except:
+                            continue
         path = 'C:\\Users\\ebalster1\\Box\\ebalster1 workspace\\Faculty\\Subramanyam_discretionary\\Subramanyam_discretionary.xlsx'
         write_excel(path, transactions)
     
