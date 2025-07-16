@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "LedgerParser-1",
+			"path": "../LedgerParser-1"
+		}
+	],
+	"settings": {}
+}
