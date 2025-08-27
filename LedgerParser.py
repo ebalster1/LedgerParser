@@ -89,7 +89,6 @@ def get_startup(matrix, path, fund):
 # Parsing out financial information
 filetypes = (
     ('excel files', '*.xlsx'),
-    ('csv files', '*.csv'),
     ('All files', '*.*')
 )
 
